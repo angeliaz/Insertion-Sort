@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Insertion-Sort</title>
+</head>
+<body>
+    <div class="wrap">
+        count: <input id="count" type="text" value="10">
+        max: <input id="max" type="text" value="1000">
+        <input type="button" id="start" value="start">
+        <p id="random"></p>
+        <p id="sorted"></p>
+        <p id="cost"></p>
+    </div>
+    <script>
+        (function (win, doc) {
+
+            function $(id) {
+                return document.getElementById(id);
+            }
+
+            function getRandomArr(count, max) {
+                var i = 0, arr = [];
+                for(; i < count; i++) {
+                    arr.push(Math.floor(Math.random() * max));
+                }
+                return arr;
+            }
+
+            function insertionSort(arr) {
+                var i = 1, len = arr.length;
+                for(; i < len; i++) {
+                    var key = arr[i];
+                    var j = i - 1;
+                    while(j >= 0 && arr[j] > key) {
+                        arr[j + 1] = arr[j];
+                        j--;
+                    }
+                    arr[j+1] = key; 
+                }
+                return arr;
+            }
+
+            function start() {
+                var count = $('count').value;
+                var max = $('max').value;
+                var random = getRandomArr(count, max);
+                $('random').innerHTML = random;
+                var t1 = performance.now();
+                var sorted = insertionSort(random);
+                var t2 = performance.now();
+                $('sorted').innerHTML = sorted;
+                $('cost').innerHTML = t2 - t1;
+            }
+
+            $('start').onclick = function () {
+                start();
+            }
+
+        })(window, document);
+    </script>
+</body>
+</html>
